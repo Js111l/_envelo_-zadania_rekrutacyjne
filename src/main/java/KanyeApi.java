@@ -55,11 +55,11 @@ class Main {
                 throw new RuntimeException();
             }
             for (int i = 0; i < numb.length(); i++) {
-                if (!Character.isDigit(numb.charAt(i))) {
+                if (!Character.isDigit(numb.charAt(i))) {//check if each char is a digit and return a string of digits
                     throw new RuntimeException();
                 }
             }
-            //check if each char is a digit and return a string of digits
+            
             return Integer.valueOf(numb);
         } catch (Exception e) {//if some char is not a digit, throw an exception
             System.out.println("....................................\n~~ you should provide a correct Integer ~~\n~~ correct Integer should be: ~~\n -> positive \n -> not a floating-point number \n -> definitely should contain digits\n ....................................\n");
