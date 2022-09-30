@@ -26,7 +26,7 @@ class Main {
         int counter = 0;
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("*type \"next\" to generate new next Kanye quote or \"loop n\" to generate n quotes*");
+            System.out.println(" * type \"next\" to generate next unique Kanye quote*\n * type \"loop n\" to generate n next unique quotes. *\n * type \"quit\" to end program *");
             String string = scanner.nextLine();
             if (string.equals("next")) {
                 counter++;
@@ -37,21 +37,33 @@ class Main {
                 for (int i = 0; i < numberOfQuotes.orElse(0); i++) {
                     counter++;
                     System.out.println("quote " + counter + ": " + KanyeApi.next());
-
                 }
+            } else if (string.equals("quit")) {
+                System.out.println("....................................\n" +
+                        "Thank you for using Kanye's wisdom generator!"+
+                        "\n ....................................\n");
+                break;
             }
-
         }
     }
+
     private static Integer helper(String string) {//helper function to check if input is correct
         try {
             String numb = new StringBuilder(string).
-                    replace(0, 4, "").toString().chars().mapToObj(x -> (char) x).
-                    filter(x -> Character.isDigit(x)).map(x -> String.valueOf(x)).collect(Collectors.joining());
+                    replace(0, 4, "").toString().trim();
+            if (numb.charAt(0) == '-') {
+                throw new RuntimeException();
+            }
+            for (int i = 0; i < numb.length(); i++) {
+                if (!Character.isDigit(numb.charAt(i))) {
+                    throw new RuntimeException();
+                }
+            }
             //check if each char is a digit and return a string of digits
+//            if(numb!=null&&)
             return Integer.valueOf(numb);
         } catch (Exception e) {//if some char is not a digit, throw an exception
-            System.out.println("*you should provide an Integer*");
+            System.out.println("....................................\n~~ you should provide a correct Integer ~~\n~~ correct Integer should be: ~~\n -> positive \n -> not a floating-point number \n -> definitely should contain digits\n ....................................\n");
         }
         return null;
     }
@@ -74,6 +86,7 @@ public class KanyeApi {
         }
         return url;
     }
+
     private static URL url = connection();//in order to avoid setting up connection each time URL Object is required
 
     private static JsonObject getQuote() {
@@ -89,6 +102,7 @@ public class KanyeApi {
     }
 
     private static Set<String> quoteMemory = new HashSet<>();//stores distinct, previously generated quotes
+
     public static String next() {
         String quote = getQuote().getString("quote");
         if (!quoteMemory.contains(quote)) {//if quote hasn't been generated before, return it and add to memory
