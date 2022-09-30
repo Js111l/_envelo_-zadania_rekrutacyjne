@@ -60,7 +60,6 @@ class Main {
                 }
             }
             //check if each char is a digit and return a string of digits
-//            if(numb!=null&&)
             return Integer.valueOf(numb);
         } catch (Exception e) {//if some char is not a digit, throw an exception
             System.out.println("....................................\n~~ you should provide a correct Integer ~~\n~~ correct Integer should be: ~~\n -> positive \n -> not a floating-point number \n -> definitely should contain digits\n ....................................\n");
